@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import StatusActions from "@/components/admin/StatusActions";
 import StatusBadge from "@/components/admin/StatusBadge";
 import { getOrder } from "@/lib/admin-data";
 import { formatPrice } from "@/lib/format";
@@ -35,6 +36,7 @@ export default async function OrderDetailPage({
             {order.date} pukul {order.time}
           </p>
         </div>
+        <StatusActions orderId={order.id} status={order.status} />
       </div>
 
       <div className="mt-6 overflow-hidden rounded-xl bg-white shadow-sm">
