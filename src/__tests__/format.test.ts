@@ -1,7 +1,14 @@
 import { describe, expect, test } from "vitest";
-import { filterPizzas, formatPrice, lowestPrice, parseStars } from "@/lib/format";
+import {
+  filterPizzas,
+  formatPrice,
+  lowestPrice,
+  parsePrice,
+  parseStars,
+} from "@/lib/format";
+  
 import type { Pizza } from "@/lib/types";
-
+  
 const pizzas: Pizza[] = [
   {
     id: "pepperoni",
@@ -43,6 +50,7 @@ describe("filterPizzas", () => {
   });
 });
 
+
 describe("parseStars", () => {
   test("accepts 1–5 as number or string", () => {
     expect(parseStars(4)).toBe(4);
@@ -54,3 +62,16 @@ describe("parseStars", () => {
     }
   });
 });
+
+  describe("parsePrice", () => {
+    test("accepts dollars with up to 2 decimals", () => {
+      expect(parsePrice("12.5")).toBe(12.5);
+     expect(parsePrice(" 13.00 ")).toBe(13);
+      expect(parsePrice("9")).toBe(9);
+    });
+    test("rejects everything else", () => {
+      for (const bad of ["", "abc", "0", "-1", "12.345", "1e2", "101", 12, null]) {
+        expect(parsePrice(bad)).toBeNull();
+      }
+    });
+  });
